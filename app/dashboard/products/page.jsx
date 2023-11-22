@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import styles from "@app/ui/dashboard/products/products.module.css";
+import styles from "@/app/ui/dashboard/products/products.module.css";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 
@@ -30,18 +30,18 @@ const ProductsPage = () => {
            <td>
              <div className={styles.product}>
                <Image
-                 src="/noavatar.png"
+                 src="/noproduct.jpg"
                  alt=""
                  width={40}
                  height={40}
                  className={styles.productImage}
                />
-               John Doe
+               iPhone
              </div>
            </td>
-           <td>john@example.com</td>
-           <td>13.01.2023</td>
-           <td>Admin</td>
+           <td>Desc</td>
+           <td>$999</td>
+           <td>10/10/2020</td>
            <td>Active</td>
            <td>
              <div className={styles.buttons}>
