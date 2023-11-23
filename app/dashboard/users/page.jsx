@@ -4,10 +4,11 @@ import Link from "next/link"
 import Image from "next/image"
 import { fetchUsers } from "../../lib/data";
 import styles from "../../ui/dashboard/users/users.module.css";
+import { deleteUser } from "../../lib/actions";
 const UsersPage = async({ searchParams }) => {
   const q = searchParams?.q || ""
   const page = searchParams?.page || 1
-  const users = await fetchUsers(q, page)
+  const{users, count} = await fetchUsers(q, page)
 
 
   return (
@@ -50,21 +51,24 @@ const UsersPage = async({ searchParams }) => {
             <td>{user.isActive ? "Active" : "Passive"}</td>
             <td>
               <div className={styles.buttons}>
-              <Link href="/">
+              <Link href={`/dashboard/users/${user.id}`}>
                 <button className={`${styles.button} ${styles.view}`}>
                     View
                 </button>
               </Link>
-              <button className={`${styles.button} ${styles.delete}`}>
-                  Delete
-              </button>
+              <form action={deleteUser}>
+                <input type="hidden" name="id" value={user.id} />
+                <button className={`${styles.button} ${styles.delete}`}>
+                    Delete
+                </button>
+              </form>
               </div>
             </td>
           </tr>
           ))}
         </tbody>
       </table>
-      <Pagination />
+      <Pagination count={count} />
      </div>
   )
 }
