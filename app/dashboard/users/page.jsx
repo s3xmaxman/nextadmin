@@ -1,13 +1,15 @@
-import styles from "@/app/ui/dashboard/users/users.module.css";
-import Search from "@/app/ui/dashboard/search/search"
-import Pagination from "@/app/ui/dashboard/pagination/pagination";
+import Search from "../../ui/dashboard/search/search"
+import Pagination from "../../ui/dashboard/pagination/pagination";
 import Link from "next/link"
 import Image from "next/image"
-import { fetchUsers } from "@/app/lib/data";
+import { fetchUsers } from "../../lib/data";
+import styles from "../../ui/dashboard/users/users.module.css";
+const UsersPage = async({ searchParams }) => {
+  const q = searchParams?.q || ""
+  const page = searchParams?.page || 1
+  const users = await fetchUsers(q, page)
 
-const UsersPage = async({ placeholder }) => {
-  const users = await fetchUsers()
-  console.log(users)
+
   return (
      <div className={styles.container}>
         <div className={styles.top}>
@@ -42,10 +44,10 @@ const UsersPage = async({ placeholder }) => {
                 {user.username}
               </div>
             </td>
-            <td>john@example.com</td>
-            <td>13.01.2023</td>
-            <td>Admin</td>
-            <td>Active</td>
+            <td>{user.email}</td>
+            <td>{user.createdAt?.toString().slice(4, 16)}</td>
+            <td>{user.isAdmin ? "Admin" : "Client"}</td>
+            <td>{user.isActive ? "Active" : "Passive"}</td>
             <td>
               <div className={styles.buttons}>
               <Link href="/">
